@@ -1,0 +1,183 @@
+// ============================================
+// AI Career Hub — Main SCSS Entry
+// ============================================
+
+// Abstracts
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/functions' as *;
+
+// Base
+@use 'base/reset';
+@use 'base/typography';
+
+// Components
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/forms';
+
+// Layouts
+@use 'layouts/sidebar';
+@use 'layouts/navbar';
+
+// Pages
+@use 'pages/auth';
+@use 'pages/dashboard';
+@use 'pages/resume';
+@use 'pages/kanban';
+@use 'pages/interview';
+@use 'pages/profile';
+@use 'pages/settings';
+
+// ── Google Font Import ────────────────────────
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+// ── CSS Custom Properties (Theming) ───────────
+:root,
+[data-theme="light"] {
+  --bg: #{$light-bg};
+  --surface: #{$light-surface};
+  --surface-alt: #{$light-surface-alt};
+  --text: #{$light-text};
+  --text-muted: #{$light-text-muted};
+  --border: #{$light-border};
+  --primary: #{$primary};
+  --primary-light: #{$primary-light};
+  --primary-gradient: #{$primary-gradient};
+  --secondary: #{$secondary};
+  --secondary-gradient: #{$secondary-gradient};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-glow: #{$shadow-glow};
+}
+
+[data-theme="dark"] {
+  --bg: #{$dark-bg};
+  --surface: #{$dark-surface};
+  --surface-alt: #{$dark-surface-alt};
+  --text: #{$dark-text};
+  --text-muted: #{$dark-text-muted};
+  --border: #{$dark-border};
+  --primary: #{$primary-light};
+  --primary-light: #{$primary-light};
+  --primary-gradient: #{$primary-gradient};
+  --secondary: #{$secondary};
+  --secondary-gradient: #{$secondary-gradient};
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-glow: #{$shadow-glow};
+}
+
+// ── Global Styles ─────────────────────────────
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background $transition-slow, color $transition-slow;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ── App Layout ────────────────────────────────
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: 
+      radial-gradient(circle at 15% 50%, rgba(94, 106, 210, 0.08), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(255, 92, 53, 0.05), transparent 25%);
+    pointer-events: none;
+  }
+}
+
+.main-content {
+  flex: 1;
+  margin-left: $sidebar-width;
+  min-height: 100vh;
+  transition: margin-left $transition-slow;
+
+  @include respond-below(lg) {
+    margin-left: 0;
+  }
+}
+
+.page-content {
+  padding: $space-6;
+  max-width: $container-max;
+  margin: 0 auto;
+
+  @include respond-below(sm) {
+    padding: $space-4;
+  }
+}
+
+// ── Animations ────────────────────────────────
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.3s ease-out;
+}
+
+// ── Utility Classes ───────────────────────────
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-full;
+  white-space: nowrap;
+
+  &.badge-primary { background: rgba($primary, 0.1); color: $primary; }
+  &.badge-success { background: rgba($success, 0.1); color: $success; }
+  &.badge-warning { background: rgba($warning, 0.1); color: $warning; }
+  &.badge-danger  { background: rgba($danger, 0.1);  color: $danger;  }
+  &.badge-info    { background: rgba($info, 0.1);    color: $info;    }
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: $space-6 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

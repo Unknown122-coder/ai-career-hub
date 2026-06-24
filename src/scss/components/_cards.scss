@@ -1,0 +1,254 @@
+// ============================================
+// AI Career Hub — Card Components
+// ============================================
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.card {
+  @include card-surface;
+  padding: $space-6;
+
+  &.card-hover {
+    @include card-hover;
+  }
+}
+
+.card-glass {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: $space-6;
+}
+
+.card-header {
+  @include flex-between;
+  margin-bottom: $space-4;
+}
+
+.card-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: var(--text);
+}
+
+.card-subtitle {
+  font-size: $font-size-sm;
+  color: var(--text-muted);
+  margin-top: $space-1;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.card-footer {
+  margin-top: $space-4;
+  padding-top: $space-4;
+  border-top: 1px solid var(--border);
+}
+
+// Stat Card
+// Stat Card
+.stat-card {
+  @include card-surface;
+  padding: $space-6;
+  position: relative;
+  overflow: hidden;
+  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 2;
+  }
+
+  .stat-card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+      rgba(255, 255, 255, 0.08),
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity $transition-base;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  > * {
+    position: relative;
+    z-index: 3;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(94, 106, 210, 0.3);
+
+    .stat-card-glow {
+      opacity: 1;
+    }
+  }
+
+  // Variants
+  &.variant-primary {
+    background: var(--primary-gradient);
+    border: none;
+    box-shadow: var(--shadow-glow);
+
+    .stat-card-glow {
+      background: radial-gradient(
+        600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+        rgba(255, 255, 255, 0.2),
+        transparent 40%
+      );
+    }
+
+    .stat-card-icon {
+      background: rgba(255, 255, 255, 0.2) !important;
+      color: #fff !important;
+    }
+
+    .stat-card-value, .stat-card-label {
+      color: #fff;
+    }
+
+    .stat-card-change {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    &::before {
+      opacity: 0.8;
+    }
+
+    &:hover {
+      box-shadow: 0 0 32px rgba(94, 106, 210, 0.6);
+    }
+  }
+
+  &.variant-secondary {
+    background: var(--secondary-gradient);
+    border: none;
+    box-shadow: var(--shadow-glow-secondary);
+
+    .stat-card-glow {
+      background: radial-gradient(
+        600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+        rgba(255, 255, 255, 0.2),
+        transparent 40%
+      );
+    }
+
+    .stat-card-icon {
+      background: rgba(255, 255, 255, 0.2) !important;
+      color: #fff !important;
+    }
+
+    .stat-card-value, .stat-card-label {
+      color: #fff;
+    }
+
+    .stat-card-change {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    &::before {
+      opacity: 0.8;
+    }
+
+    &:hover {
+      box-shadow: 0 0 32px rgba(255, 92, 53, 0.6);
+    }
+  }
+}
+
+.stat-card-header {
+  @include flex-between;
+  align-items: flex-start;
+  margin-bottom: $space-5;
+}
+
+.stat-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-lg;
+  @include flex-center;
+  font-size: $font-size-lg;
+  background: var(--surface-alt);
+  color: var(--text-muted);
+}
+
+.stat-card-actions {
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.stat-card-value {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: $space-2;
+  letter-spacing: -0.02em;
+}
+
+.stat-card-label {
+  font-size: $font-size-sm;
+  color: var(--text-muted);
+  font-weight: $font-weight-medium;
+  margin-bottom: $space-3;
+}
+
+.stat-card-footer {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.stat-card-change {
+  font-size: 13px;
+  font-weight: $font-weight-medium;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: 4px 10px;
+  border-radius: $radius-full;
+
+  &.positive {
+    color: $success;
+    background: rgba($success, 0.1);
+  }
+
+  &.negative {
+    color: $danger;
+    background: rgba($danger, 0.1);
+  }
+}
+
+.stat-card-timeframe {
+  font-size: 13px;
+  color: var(--text-muted);
+}

@@ -1,0 +1,187 @@
+// ============================================
+// AI Career Hub — Sidebar Layout
+// ============================================
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: $sidebar-width;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  z-index: $z-fixed;
+  @include flex-column;
+  transition: width $transition-slow, transform $transition-slow;
+  @include custom-scrollbar;
+  overflow-y: auto;
+
+  @include respond-below(lg) {
+    transform: translateX(-100%);
+    box-shadow: $shadow-2xl;
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.sidebar-overlay {
+  display: none;
+
+  @include respond-below(lg) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: $z-fixed - 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-base;
+
+    &.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+}
+
+.sidebar-brand {
+  @include flex-between;
+  padding: $space-5 $space-6;
+  border-bottom: 1px solid var(--border);
+  min-height: $navbar-height;
+}
+
+.sidebar-logo {
+  @include flex-center;
+  gap: $space-3;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: var(--text);
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-lg;
+    @include gradient-primary;
+    @include flex-center;
+    color: #fff;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-sm;
+  }
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: $space-4 $space-3;
+}
+
+.sidebar-section {
+  margin-bottom: $space-6;
+}
+
+.sidebar-section-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 $space-3;
+  margin-bottom: $space-2;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-2 $space-3;
+  border-radius: $radius-lg;
+  color: var(--text-muted);
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  transition: all $transition-fast;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 2px;
+  position: relative;
+  overflow: hidden;
+
+  .sidebar-link-icon {
+    font-size: $font-size-lg;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+  }
+
+  &.active {
+    background: rgba(94, 106, 210, 0.08);
+    color: var(--text);
+    font-weight: $font-weight-semibold;
+    box-shadow: inset 3px 0 0 $primary;
+
+    .sidebar-link-icon {
+      color: $primary;
+      opacity: 1;
+      filter: drop-shadow(0 0 8px rgba(94, 106, 210, 0.4));
+    }
+  }
+}
+
+.sidebar-footer {
+  padding: $space-4 $space-3;
+  border-top: 1px solid var(--border);
+}
+
+.sidebar-profile {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: var(--surface-alt);
+  }
+}
+
+.sidebar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-full;
+  @include gradient-primary;
+  @include flex-center;
+  color: #fff;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+  flex-shrink: 0;
+}
+
+.sidebar-profile-info {
+  flex: 1;
+  min-width: 0;
+
+  .name {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    @include truncate;
+  }
+
+  .email {
+    font-size: $font-size-xs;
+    color: var(--text-muted);
+    @include truncate;
+  }
+}

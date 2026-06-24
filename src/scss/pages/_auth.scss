@@ -1,0 +1,201 @@
+// ============================================
+// AI Career Hub — Auth Pages
+// ============================================
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  background: var(--bg);
+}
+
+.auth-left {
+  flex: 1;
+  @include flex-center;
+  padding: $space-8;
+  position: relative;
+  z-index: 2;
+
+  @include respond-below(lg) {
+    padding: $space-6;
+  }
+}
+
+.auth-right {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  @include flex-center;
+  border-left: 1px solid var(--border);
+
+  @include respond-below(lg) {
+    display: none;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(94, 106, 210, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at bottom left, rgba(255, 92, 53, 0.1) 0%, transparent 50%);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(94, 106, 210, 0.2), transparent);
+    filter: blur(80px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 10s infinite;
+  }
+}
+
+.auth-right-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--text);
+  padding: $space-8;
+  max-width: 480px;
+
+  h2 {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $space-4;
+    letter-spacing: -0.02em;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  p {
+    font-size: $font-size-base;
+    color: var(--text-muted);
+    line-height: $line-height-relaxed;
+  }
+}
+
+.auth-form-wrapper {
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-brand {
+  @include flex-center;
+  gap: $space-3;
+  margin-bottom: $space-12;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: var(--text);
+  letter-spacing: -0.02em;
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-md;
+    background: var(--primary-gradient);
+    @include flex-center;
+    color: #fff;
+    font-size: $font-size-base;
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+.auth-title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  margin-bottom: $space-2;
+  text-align: center;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: $space-8;
+  text-align: center;
+}
+
+.auth-divider {
+  @include flex-center;
+  gap: $space-4;
+  margin: $space-6 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: $space-6;
+  font-size: 13px;
+  color: var(--text-muted);
+
+  a {
+    color: var(--text);
+    font-weight: $font-weight-medium;
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 4px;
+    transition: all $transition-fast;
+
+    &:hover {
+      color: $primary;
+      text-decoration-color: $primary;
+    }
+  }
+}
+
+.auth-social-btn {
+  width: 100%;
+  padding: $space-3;
+  border: 1px solid var(--border);
+  border-radius: $radius-full;
+  @include flex-center;
+  gap: $space-3;
+  font-size: 13px;
+  font-weight: $font-weight-medium;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.password-toggle {
+  position: absolute;
+  right: $space-3;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: $space-1;
+  border-radius: $radius-sm;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: var(--text);
+  }
+}

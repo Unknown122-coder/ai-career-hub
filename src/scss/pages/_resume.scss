@@ -1,0 +1,211 @@
+// ============================================
+// AI Career Hub — Resume Analyzer Page
+// ============================================
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.resume-page {
+  .upload-zone {
+    @include card-surface;
+    @include flex-center;
+    @include flex-column;
+    gap: $space-4;
+    padding: $space-12 $space-6;
+    border: 2px dashed var(--border);
+    border-radius: $radius-xl;
+    cursor: pointer;
+    transition: all $transition-base;
+    text-align: center;
+
+    &:hover,
+    &.drag-over {
+      border-color: $primary;
+      background: rgba($primary, 0.03);
+    }
+
+    &.drag-over {
+      transform: scale(1.01);
+    }
+
+    .upload-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: $radius-xl;
+      background: rgba($primary, 0.1);
+      @include flex-center;
+      font-size: $font-size-2xl;
+      color: $primary;
+    }
+
+    .upload-title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    .upload-subtitle {
+      font-size: $font-size-sm;
+      color: var(--text-muted);
+    }
+  }
+
+  .upload-progress {
+    margin-top: $space-6;
+    @include card-surface;
+    padding: $space-6;
+    border-radius: $radius-xl;
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: $space-3;
+      margin-bottom: $space-4;
+
+      .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: $radius-lg;
+        background: rgba($primary, 0.1);
+        @include flex-center;
+        color: $primary;
+      }
+
+      .file-details {
+        flex: 1;
+        .file-name {
+          font-size: $font-size-sm;
+          font-weight: $font-weight-medium;
+        }
+        .file-size {
+          font-size: $font-size-xs;
+          color: var(--text-muted);
+        }
+      }
+    }
+
+    .progress-track {
+      height: 6px;
+      background: var(--surface-alt);
+      border-radius: $radius-full;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      @include gradient-primary;
+      border-radius: $radius-full;
+      transition: width 0.5s ease;
+    }
+  }
+
+  .analysis-results {
+    margin-top: $space-8;
+  }
+
+  .ats-score-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: $space-6;
+    margin-bottom: $space-8;
+
+    @include respond-below(md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ats-score-card {
+    @include card-surface;
+    padding: $space-8;
+    text-align: center;
+    @include flex-center;
+    @include flex-column;
+    gap: $space-4;
+
+    .ats-ring {
+      width: 160px;
+      height: 160px;
+      position: relative;
+    }
+
+    .ats-value {
+      @include absolute-center;
+      font-size: $font-size-4xl;
+      font-weight: $font-weight-black;
+    }
+
+    .ats-label {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+  }
+
+  .keywords-section {
+    @include card-surface;
+    padding: $space-6;
+
+    .keyword-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $space-2;
+      margin-top: $space-4;
+    }
+
+    .keyword-tag {
+      padding: $space-2 $space-4;
+      border-radius: $radius-full;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-medium;
+
+      &.found {
+        background: rgba($success, 0.1);
+        color: $success;
+      }
+      &.missing {
+        background: rgba($danger, 0.1);
+        color: $danger;
+      }
+    }
+  }
+
+  .suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $space-4;
+    margin-top: $space-4;
+  }
+
+  .suggestion-card {
+    @include card-surface;
+    @include card-hover;
+    padding: $space-5;
+
+    .suggestion-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: $radius-lg;
+      @include flex-center;
+      margin-bottom: $space-3;
+      font-size: $font-size-lg;
+    }
+
+    .suggestion-title {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $space-2;
+    }
+
+    .suggestion-text {
+      font-size: $font-size-sm;
+      color: var(--text-muted);
+      line-height: $line-height-relaxed;
+    }
+
+    .suggestion-priority {
+      display: inline-block;
+      margin-top: $space-3;
+      padding: 2px 8px;
+      border-radius: $radius-full;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-medium;
+    }
+  }
+}

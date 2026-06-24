@@ -1,0 +1,143 @@
+// ============================================
+// AI Career Hub — Navbar Layout
+// ============================================
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  height: $navbar-height;
+  background: rgba(var(--bg), 0.8);
+  border-bottom: 1px solid var(--border);
+  padding: 0 $space-6;
+  @include flex-between;
+  z-index: $z-sticky;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+}
+
+.navbar-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-lg;
+  @include flex-center;
+  color: var(--text);
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: var(--surface-alt);
+  }
+
+  @include respond-below(lg) {
+    display: flex;
+  }
+}
+
+.navbar-title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: var(--text);
+  letter-spacing: -0.01em;
+
+  @include respond-below(sm) {
+    display: none;
+  }
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.navbar-search {
+  position: relative;
+  @include respond-below(md) {
+    display: none;
+  }
+
+  .search-input {
+    width: 260px;
+    padding: $space-2 $space-4 $space-2 36px;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+    color: var(--text);
+    transition: all $transition-base;
+
+    &::placeholder {
+      color: var(--text-muted);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.2);
+      width: 300px;
+      background: var(--surface-alt);
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    left: $space-3;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 18px;
+    pointer-events: none;
+  }
+
+  .search-shortcut {
+    position: absolute;
+    right: $space-2;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 2px 6px;
+    font-size: 10px;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: $font-family-mono;
+    pointer-events: none;
+  }
+}
+
+.navbar-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  @include flex-center;
+  color: var(--text-muted);
+  cursor: pointer;
+  position: relative;
+  transition: all $transition-fast;
+  background: transparent;
+  border: none;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+  }
+
+  .badge-dot {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: $secondary;
+    border-radius: $radius-full;
+    box-shadow: 0 0 0 2px var(--bg);
+  }
+}

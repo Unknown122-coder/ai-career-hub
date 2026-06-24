@@ -1,0 +1,70 @@
+// ============================================
+// AI Career Hub — Typography
+// ============================================
+@use '../abstracts/variables' as *;
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: var(--text);
+  line-height: $line-height-normal;
+}
+
+.heading-1 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  letter-spacing: -0.025em;
+}
+
+.heading-2 {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  letter-spacing: -0.02em;
+}
+
+.heading-3 {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+}
+
+.heading-4 {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+}
+
+.heading-5 {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+}
+
+.text-body {
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+}
+
+.text-small {
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+}
+
+.text-xs {
+  font-size: $font-size-xs;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.font-mono {
+  font-family: $font-family-mono;
+}

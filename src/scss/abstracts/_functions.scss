@@ -1,0 +1,13 @@
+// ============================================
+// AI Career Hub — SCSS Functions
+// ============================================
+
+// ── Responsive rem conversion ─────────────────
+@function rem($px) {
+  @return calc($px / 16) * 1rem;
+}
+
+// ── Opacity color ─────────────────────────────
+@function alpha($color, $opacity) {
+  @return rgba($color, $opacity);
+}
