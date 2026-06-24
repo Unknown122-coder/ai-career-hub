@@ -1,5 +1,7 @@
 # AI Career Hub
 
+🚀 **[Live Demo](https://unknown122-coder.github.io/ai-career-hub/)**
+
 A production-grade SaaS frontend application helping students manage their career journey — built with React 19, Vite, Material UI, Chart.js, and SCSS.
 
 ![React](https://img.shields.io/badge/React-19-blue?style=flat-square&logo=react)
