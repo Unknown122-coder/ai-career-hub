@@ -1,98 +1,63 @@
-import { createContext, useContext, useReducer, useCallback, useMemo } from 'react';
-import authService from '../services/authService';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut, 
+  signInWithPopup, 
+  sendPasswordResetEmail,
+  updateProfile
+} from 'firebase/auth';
+import { auth, googleProvider } from '../firebase/firebase';
 
 const AuthContext = createContext(null);
 
-const AUTH_ACTIONS = {
-  LOGIN_START: 'LOGIN_START',
-  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-  LOGIN_FAILURE: 'LOGIN_FAILURE',
-  LOGOUT: 'LOGOUT',
-  SET_LOADING: 'SET_LOADING',
-  CLEAR_ERROR: 'CLEAR_ERROR',
-};
-
-const initialState = {
-  user: authService.getCurrentUser(),
-  isAuthenticated: authService.isAuthenticated(),
-  isLoading: false,
-  error: null,
-};
-
-function authReducer(state, action) {
-  switch (action.type) {
-    case AUTH_ACTIONS.LOGIN_START:
-      return { ...state, isLoading: true, error: null };
-    case AUTH_ACTIONS.LOGIN_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: true,
-        user: action.payload,
-        error: null,
-      };
-    case AUTH_ACTIONS.LOGIN_FAILURE:
-      return {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-        user: null,
-        error: action.payload,
-      };
-    case AUTH_ACTIONS.LOGOUT:
-      return { ...initialState, user: null, isAuthenticated: false };
-    case AUTH_ACTIONS.CLEAR_ERROR:
-      return { ...state, error: null };
-    default:
-      return state;
-  }
-}
-
 export function AuthProvider({ children }) {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = useCallback(async (credentials) => {
-    dispatch({ type: AUTH_ACTIONS.LOGIN_START });
-    try {
-      const { user } = await authService.login(credentials);
-      dispatch({ type: AUTH_ACTIONS.LOGIN_SUCCESS, payload: user });
-      return user;
-    } catch (error) {
-      dispatch({ type: AUTH_ACTIONS.LOGIN_FAILURE, payload: error.message });
-      throw error;
-    }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
   }, []);
 
-  const register = useCallback(async (data) => {
-    dispatch({ type: AUTH_ACTIONS.LOGIN_START });
-    try {
-      const { user } = await authService.register(data);
-      dispatch({ type: AUTH_ACTIONS.LOGIN_SUCCESS, payload: user });
-      return user;
-    } catch (error) {
-      dispatch({ type: AUTH_ACTIONS.LOGIN_FAILURE, payload: error.message });
-      throw error;
-    }
+  const login = useCallback(async ({ email, password }) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  }, []);
+
+  const register = useCallback(async ({ name, email, password }) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(userCredential.user, { displayName: name });
+    return userCredential;
   }, []);
 
   const logout = useCallback(() => {
-    authService.logout();
-    dispatch({ type: AUTH_ACTIONS.LOGOUT });
+    return signOut(auth);
   }, []);
 
-  const clearError = useCallback(() => {
-    dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR });
+  const loginWithGoogle = useCallback(() => {
+    return signInWithPopup(auth, googleProvider);
+  }, []);
+
+  const resetPassword = useCallback((email) => {
+    return sendPasswordResetEmail(auth, email);
   }, []);
 
   const value = useMemo(
     () => ({
-      ...state,
+      user,
+      isAuthenticated: !!user,
+      loading,
       login,
       register,
       logout,
-      clearError,
+      loginWithGoogle,
+      resetPassword,
     }),
-    [state, login, register, logout, clearError]
+    [user, loading, login, register, logout, loginWithGoogle, resetPassword]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

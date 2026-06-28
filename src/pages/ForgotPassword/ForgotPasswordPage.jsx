@@ -5,8 +5,8 @@ import EmailIcon from '@mui/icons-material/EmailOutlined';
 import CheckCircleIcon from '@mui/icons-material/CheckCircleOutlined';
 import { Input, Button } from '../../components';
 import { useForm } from '../../hooks';
+import { useAuth } from '../../contexts';
 import { ROUTES } from '../../constants';
-import authService from '../../services/authService';
 
 const validationRules = {
   email: { required: true, email: true, requiredMessage: 'Email is required' },
@@ -26,13 +26,19 @@ export default function ForgotPasswordPage() {
     handleSubmit,
   } = useForm({ email: '' }, validationRules);
 
+  const { resetPassword } = useAuth();
+  
   const onSubmit = async (formValues) => {
     try {
       setServerError('');
-      await authService.forgotPassword(formValues);
+      await resetPassword(formValues.email);
       setSent(true);
     } catch (err) {
-      setServerError(err.message || 'Something went wrong');
+      if (err.code === 'auth/user-not-found') {
+        setServerError('No user found with this email.');
+      } else {
+        setServerError(err.message || 'Something went wrong');
+      }
     }
   };
 

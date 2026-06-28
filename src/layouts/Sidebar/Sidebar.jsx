@@ -95,10 +95,10 @@ const Sidebar = memo(function Sidebar({ isOpen, onClose }) {
         <div className="sidebar-footer">
           <div className="sidebar-profile">
             <div className="sidebar-avatar">
-              {getInitials(user?.name || 'User')}
+              {getInitials(user?.displayName || user?.email?.split('@')[0] || 'User')}
             </div>
             <div className="sidebar-profile-info">
-              <p className="name">{user?.name || 'User'}</p>
+              <p className="name">{user?.displayName || user?.email?.split('@')[0] || 'User'}</p>
               <p className="email">{user?.email || 'user@example.com'}</p>
             </div>
           </div>

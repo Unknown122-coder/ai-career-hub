@@ -47,7 +47,12 @@ function PageLoader() {
  * Route guard — redirects to login if not authenticated
  */
 function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <PageLoader />;
+  }
+
   if (!isAuthenticated) {
     return <Navigate to={ROUTES.LOGIN} replace />;
   }
@@ -58,7 +63,12 @@ function ProtectedRoute({ children }) {
  * Guest route — redirects to dashboard if already authenticated
  */
 function GuestRoute({ children }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <PageLoader />;
+  }
+
   if (isAuthenticated) {
     return <Navigate to={ROUTES.DASHBOARD} replace />;
   }

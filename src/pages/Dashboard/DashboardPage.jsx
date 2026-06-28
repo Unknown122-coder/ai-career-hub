@@ -100,7 +100,7 @@ export default function DashboardPage() {
     fetchData();
   }, []);
 
-  const firstName = user?.name?.split(' ')[0] || 'there';
+  const firstName = user?.displayName?.split(' ')[0] || user?.email?.split('@')[0] || 'there';
 
   if (!stats) {
     return (

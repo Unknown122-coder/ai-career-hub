@@ -49,7 +49,13 @@ export default function RegisterPage() {
       await registerUser(formValues);
       navigate(ROUTES.DASHBOARD);
     } catch (err) {
-      setServerError(err.message || 'Registration failed');
+      if (err.code === 'auth/email-already-in-use') {
+        setServerError('Email is already registered.');
+      } else if (err.code === 'auth/weak-password') {
+        setServerError('Password should be at least 6 characters.');
+      } else {
+        setServerError(err.message || 'Registration failed');
+      }
     }
   };
 
