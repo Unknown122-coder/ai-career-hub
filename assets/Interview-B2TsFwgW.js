@@ -1,4 +1,4 @@
-import{a as e}from"./rolldown-runtime-Cyuzqnbw.js";import{h as t,m as n}from"./charts-0NOBGwam.js";import{o as r,t as i}from"./motion-BTPbep6R.js";import{c as a,s as o}from"./ui-CoPMD1OS.js";import{a as s,d as c,n as l,p as u,u as d}from"./index-C-EGH5cy.js";var f=e(t(),1),p=n(),m={"Explain closures in JavaScript":`A **closure** is a function that retains access to variables from its outer (lexical) scope, even after the outer function has returned.
+import{a as e}from"./rolldown-runtime-Cyuzqnbw.js";import{h as t,m as n}from"./charts-0NOBGwam.js";import{o as r,t as i}from"./motion-BTPbep6R.js";import{c as a,s as o}from"./ui-CoPMD1OS.js";import{a as s,d as c,n as l,p as u,u as d}from"./index-Dea51mCP.js";var f=e(t(),1),p=n(),m={"Explain closures in JavaScript":`A **closure** is a function that retains access to variables from its outer (lexical) scope, even after the outer function has returned.
 
 **Example:**
 \`\`\`js
